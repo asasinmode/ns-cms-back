@@ -7,6 +7,14 @@ export const isANonEmptyString = (value) => {
    return typeof value === "string" && value.length > 0
 }
 
+export const validatePassword = (password) => {
+   return typeof password === "string" && password.match(passwordRegex) !== null
+}
+
+export const validateEmail = (email) => {
+   return typeof email === "string" && email.length <= 255 && email.match(emailRegex) !== null
+}
+
 export const validatePresidentData = ({ name, password, country, email, hasButton }) => {
    const rv = {
       general: undefined,
@@ -22,7 +30,7 @@ export const validatePresidentData = ({ name, password, country, email, hasButto
    if(!isNameValid){
       rv.fields.name = "name has to be a non-empty string"
    }
-   const isPasswordValid = typeof password === "string" && password.match(passwordRegex) !== null
+   const isPasswordValid = validatePassword(password)
    if(!isPasswordValid){
       rv.fields.password = "password has to be at least 6 characters long and contain at least 1 number and 1 special character"
    }
@@ -30,7 +38,7 @@ export const validatePresidentData = ({ name, password, country, email, hasButto
    if(!isCountryValid){
       rv.fields.country = "country has to be a non-empty string"
    }
-   const isEmailValid = typeof email === "string" && email.length <= 255 && email.match(emailRegex) !== null
+   const isEmailValid = validateEmail(email)
    if(!isEmailValid){
       rv.fields.email = "email has to be a valid email string"
    }
