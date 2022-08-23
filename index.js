@@ -2,7 +2,9 @@ import dotenv from "dotenv"
 dotenv.config()
 
 import connect from "./src/database/index.js"
-connect()
+connect().then(() => {
+   console.log("successfully connected to database")
+})
 
 import app from "./src/app.js"
 const port = process.env.PORT || 8000

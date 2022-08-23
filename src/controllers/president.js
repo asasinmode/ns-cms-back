@@ -17,8 +17,6 @@ const registerPresident = async (req, res) => {
       })
    }
 
-   console.log("registering president")
-
    const salt = await bcryptjs.genSalt(12)
    const hashedPassword = await bcryptjs.hash(password, salt)
 
@@ -39,6 +37,10 @@ const registerPresident = async (req, res) => {
 
 const loginPresident = async (req, res) => {
    const { email, password } = req.body
+
+   if(!email || !password){
+      return res.status(400).json({ message: "fields \"email\" and \"password\" are required" })
+   }
 
    const president = await PresidentModel.findOne({ email })
 

@@ -10,7 +10,6 @@ const createSatellite = async (req, res) => {
    if(validationErrors){
       return res.status(400).json(validationErrors)
    }
-   console.log("creating satellite")
 
    const { sideNumber, manufacturer, model, softwareVersion, vintage, launchDate, ammunitionLeft, altitude, hasAI  } = req.body
 

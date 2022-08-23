@@ -2,13 +2,13 @@ import assert from "assert/strict"
 import { validatePresidentData, validateEmail, validatePassword } from "../src/controllers/helpers/president.js"
 import { validateSatelliteData } from "../src/controllers/helpers/satellites.js"
 
-const validPresidentObject = {
+export const validPresidentObject = {
    name: "Ronald Reagan",
    country: "USA",
    email: "valid@email.com",
    password: "secure123!"
 }
-const validSatelliteDataObject = {
+export const validSatelliteDataObject = {
    sideNumber: "USA001",
    manufacturer: "example",
    ammunitionLeft: 5,
