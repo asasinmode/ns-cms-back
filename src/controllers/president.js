@@ -13,7 +13,9 @@ const registerPresident = async (req, res) => {
    const isEmailTaken = await PresidentModel.exists({ email: email })
    if(isEmailTaken){
       return res.status(400).json({
-         general: `email is already taken`
+         fields: {
+            email: `email is already taken`
+         }
       })
    }
 
@@ -31,7 +33,9 @@ const registerPresident = async (req, res) => {
    res.status(201).json({
       _id: newPresident._id,
       name: newPresident.name,
-      token: generateJWT(newPresident._id)
+      token: generateJWT(newPresident._id),
+      country: newPresident.country,
+      hasButton: newPresident.hasButton
    })
 }
 
@@ -39,7 +43,10 @@ const loginPresident = async (req, res) => {
    const { email, password } = req.body
 
    if(!email || !password){
-      return res.status(400).json({ message: "fields \"email\" and \"password\" are required" })
+      return res.status(400).json({ message: `fields "email" and "password" are required` })
+   }
+   if(typeof email !== "string" || typeof password !== "string"){
+      return res.status(400).json({ message: `fields "email" and "password" need to be strings` })
    }
 
    const president = await PresidentModel.findOne({ email })
@@ -51,7 +58,9 @@ const loginPresident = async (req, res) => {
    res.json({
       _id: president._id,
       name: president.name,
-      token: generateJWT(president._id)
+      token: generateJWT(president._id),
+      country: president.country,
+      hasButton: president.hasButton
    })
 }
 

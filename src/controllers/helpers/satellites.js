@@ -16,7 +16,7 @@ export const validateSatelliteData = ({ sideNumber, manufacturer, model, softwar
 
    const areRequiredFieldsFilled = ignoreRequiredness || (sideNumber && manufacturer && ammunitionLeft && altitude)
    if(!areRequiredFieldsFilled){
-      rv.general = "fields 'sideNumber', 'manufacturer', 'ammunitionLeft' and 'altitude' are required"
+      rv.general = `fields "sideNumber", "manufacturer", "ammunitionLeft" and "altitude" are required`
    }
 
    let isAltitudeValid = typeof altitude === "number" && altitude > 0
@@ -30,7 +30,7 @@ export const validateSatelliteData = ({ sideNumber, manufacturer, model, softwar
 
    // for patching satellites all fields are optional
    // so if it's undefined it's okay and if it's not
-   // then it needs to be in valid format
+   // then it needs to be in a valid format
    if(ignoreRequiredness){
       isAltitudeValid = altitude === undefined || isAltitudeValid
       isAmmunitionLeftValid = ammunitionLeft === undefined || isAmmunitionLeftValid
@@ -58,10 +58,10 @@ export const validateSatelliteData = ({ sideNumber, manufacturer, model, softwar
       rv.fields.model = "model, if specified, has to be a non-empty string"
    }
    if(!isSoftwareVersionValid){
-      rv.fields.softwareVersion = "softwareVersion, if specified, has to be in \"1.0.0\" format"
+      rv.fields.softwareVersion = `softwareVersion, if specified, has to be in "1.0.0" format`
    }
    if(!isVintageValid){
-      rv.fields.vintage = `vintage, if specified, has to be a number in rage <1900, ${ currentYear }>`
+      rv.fields.vintage = `vintage, if specified, has to be a number in range <1900, ${ currentYear }>`
    }
 
    if(launchDate !== undefined){

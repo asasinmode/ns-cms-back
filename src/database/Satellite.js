@@ -11,7 +11,8 @@ const SatelliteSchema = mongoose.Schema({
       required: true
    },
    model: {
-      type: String
+      type: String,
+      default: "unknown"
    },
    softwareVersion: {
       type: String,
