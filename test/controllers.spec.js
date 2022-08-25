@@ -1,9 +1,10 @@
 import assert from "assert/strict"
 import mongoose from "mongoose"
 import request from "supertest"
+import dotenv from "dotenv"
+dotenv.config()
 
 import app from "../src/app.js"
-import connect from "../src/database/index.js"
 import PresidentModel from "../src/database/President.js"
 import SatelliteModel from "../src/database/Satellite.js"
 import { validPresidentObject, validSatelliteDataObject } from "./helpers.spec.js"
@@ -15,8 +16,8 @@ describe("controllers", () => {
    let token
    let testSatellite
 
-   before((done) => {
-      connect().then(done)
+   before(async () => {
+      await mongoose.connect(process.env.DATABASE_URI)
    })
    after(async () => {
       await PresidentModel.findOneAndRemove({ email: testEmail })
@@ -54,6 +55,18 @@ describe("controllers", () => {
             .then(res => {
                assert.ok(res.body.token !== undefined)
                token = res.body.token
+            })
+      })
+      it("reject president with existing email", () => {
+         return request(app)
+            .post('/president')
+            .send({
+               ...validPresidentObject,
+               email: testEmail
+            })
+            .expect(400)
+            .then(res => {
+               assert.ok(res.body.fields.email !== undefined)
             })
       })
    })

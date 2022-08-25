@@ -2,7 +2,7 @@
 
 backend do **ns-cms** stworzony jako **REST API** przy pomocy [Node.js](https://nodejs.org/en/) oraz [Express](https://expressjs.com/)
 
-<!-- ### działające demo aplikacji można znaleźć [tutaj](https://ns-cms-back.herokuapp.com/) -->
+### działające demo aplikacji można znaleźć [tutaj](https://ns-cms-back.herokuapp.com/)
 
 # instalacja i uruchamianie
 
