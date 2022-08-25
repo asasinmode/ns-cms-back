@@ -28,8 +28,7 @@ const SatelliteSchema = mongoose.Schema({
    launchDate: {
       type: Date,
       default: Date.now(),
-      min: [launchDateMin, 'launch date cannot be earlier than 01.01.1970'],
-      max: [Date.now(), 'launch date cannot be later than current date']
+      min: [launchDateMin, 'launch date cannot be earlier than 01.01.1970']
    },
    ammunitionLeft: {
       type: Number,
