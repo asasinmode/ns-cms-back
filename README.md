@@ -10,3 +10,11 @@ backend do **ns-cms** stworzony jako **REST API** przy pomocy [Node.js](https://
 2. uruchomić wiersz poleceń w folderze pobranego repozytorium
 2. zainstalować potrzebne moduły komendą `npm i`
 3. uruchomić lokalnie za pomocą `npm run dev`
+
+# testy
+
+Wymaga połączenia z bazą danych do przetestowania endpointów.
+
+```sh
+npm run test
+```
