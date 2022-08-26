@@ -64,7 +64,7 @@ const loginPresident = async (req, res) => {
    })
 }
 
-// deletable
+// for tests and dev
 const deletePresident = async (req, res) => {
    const uid = req.params.uid
 
