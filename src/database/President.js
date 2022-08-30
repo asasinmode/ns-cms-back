@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { emailRegex } from "../controllers/helpers/president.js"
+import { emailRegex } from "../controllers/helpers/presidents.js"
 
 const PresidentSchema = mongoose.Schema({
    name: {

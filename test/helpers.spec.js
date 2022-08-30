@@ -1,5 +1,5 @@
 import assert from "assert/strict"
-import { validatePresidentData, validateEmail, validatePassword } from "../src/controllers/helpers/president.js"
+import { validatePresidentData, validateEmail, validatePassword } from "../src/controllers/helpers/presidents.js"
 import { validateSatelliteData } from "../src/controllers/helpers/satellites.js"
 
 export const validPresidentObject = {

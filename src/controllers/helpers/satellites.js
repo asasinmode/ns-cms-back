@@ -1,4 +1,4 @@
-import { isANonEmptyString } from "./president.js"
+import { isANonEmptyString } from "./presidents.js"
 
 // https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
 // modified to only accept major, minor and patch numeric identifiers

@@ -31,12 +31,9 @@ const createSatellite = async (req, res) => {
 const deleteSatellite = async (req, res) => {
    const uid = req.params.uid
 
-   const deletionResults = await SatelliteModel.findByIdAndDelete(uid)
-   if(!deletionResults){
-      return res.status(404).json({ message: "not found" })
-   }
+   await SatelliteModel.findByIdAndDelete(uid)
 
-   res.status(204).end()
+   res.sendStatus(204)
 }
 
 const updateSatellite = async (req, res) => {
@@ -44,7 +41,7 @@ const updateSatellite = async (req, res) => {
 
    const isExist = await SatelliteModel.exists({ _id: uid })
    if(!isExist){
-      return res.status(404).json({ message: "not found" })
+      return res.sendStatus(404)
    }
 
    const validationErrors = validateSatelliteData(req.body, true)

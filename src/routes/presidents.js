@@ -1,7 +1,7 @@
 import express from "express"
 const presidentRouter = express.Router()
 
-import { registerPresident, loginPresident, deletePresident } from "../controllers/president.js"
+import { registerPresident, loginPresident, deletePresident } from "../controllers/presidents.js"
 import protect from "../middleware/auth.js"
 
 presidentRouter.post("/", registerPresident)

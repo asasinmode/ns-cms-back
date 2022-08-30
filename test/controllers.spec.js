@@ -28,13 +28,13 @@ describe("controllers", () => {
    describe("president", () => {
       it("reject president without required fields", (done) => {
          request(app)
-            .post('/president')
+            .post('/presidents')
             .send({})
             .expect(400, done)
       })
       it("create president with valid fields and return JWT", () => {
          return request(app)
-            .post('/president')
+            .post('/presidents')
             .send({
                ...validPresidentObject,
                email: testEmail
@@ -46,7 +46,7 @@ describe("controllers", () => {
       })
       it("return jwt on login", () => {
          return request(app)
-            .post('/president/login')
+            .post('/presidents/login')
             .send({
                email: testEmail,
                password: "secure123!"
@@ -59,7 +59,7 @@ describe("controllers", () => {
       })
       it("reject president with existing email", () => {
          return request(app)
-            .post('/president')
+            .post('/presidents')
             .send({
                ...validPresidentObject,
                email: testEmail
@@ -118,18 +118,18 @@ describe("controllers", () => {
             request(app)
                .post('/satellites')
                .send({})
-               .expect(403, done)
+               .expect(401, done)
          })
          it("patch request", (done) => {
             request(app)
                .patch(`/satellites/${ testSatellite._id }`)
                .send({})
-               .expect(403, done)
+               .expect(401, done)
          })
          it("delete request", (done) => {
             request(app)
                .delete(`/satellites/${ testSatellite._id }`)
-               .expect(403, done)
+               .expect(401, done)
          })
       })
    })

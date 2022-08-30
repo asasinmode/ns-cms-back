@@ -1,7 +1,7 @@
 import bcryptjs from "bcryptjs"
 import jwt from "jsonwebtoken"
 import PresidentModel from "../database/President.js"
-import { validatePresidentData } from "./helpers/president.js"
+import { validatePresidentData } from "./helpers/presidents.js"
 
 const registerPresident = async (req, res) => {
    const validationErrors = validatePresidentData(req.body)
@@ -68,12 +68,9 @@ const loginPresident = async (req, res) => {
 const deletePresident = async (req, res) => {
    const uid = req.params.uid
 
-   const deletionResults = await PresidentModel.findByIdAndDelete(uid)
-   if(!deletionResults){
-      return res.status(404).json({ message: "not found" })
-   }
+   await PresidentModel.findByIdAndDelete(uid)
 
-   res.status(204).end()
+   res.sendStatus(204)
 }
 
 const generateJWT = (id) => {

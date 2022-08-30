@@ -10,19 +10,18 @@ const protect = async (req, res, next) => {
          const decoded = jwt.verify(token, process.env.JWT_SECRET)
 
          req.user = await PresidentModel.findById(decoded.id).select('-password')
-         if(!req.user){
-            throw new Error()
-         }
 
-         next()
+         // president doesn't exist so we throw error to return 401
+         if(!req.user){ throw new Error() }
+
+         return next()
       } catch(e){
          return res.status(401).json({ message: "not authorized" })
       }
    }
 
-   if(!token){
-      return res.status(403).json({ message: "forbidden" })
-   }
+   // no token was found
+   return res.status(401).json({ message: "authorization token is required" })
 }
 
 export default protect

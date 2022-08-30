@@ -4,7 +4,7 @@ import "express-async-errors"
 import errorHandler from "./middleware/errorHandler.js"
 
 import indexRouter from "./routes/index.js"
-import presidentRouter from "./routes/presidents.js"
+import presidentsRouter from "./routes/presidents.js"
 import satellitesRouter from "./routes/satellites.js"
 
 const app = express()
@@ -15,7 +15,7 @@ app.use(cors())
 
 // ROUTES
 app.use('/', indexRouter)
-app.use('/president', presidentRouter)
+app.use('/presidents', presidentsRouter)
 app.use('/satellites', satellitesRouter)
 
 app.use(errorHandler)
