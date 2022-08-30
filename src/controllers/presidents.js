@@ -1,23 +1,17 @@
 import bcryptjs from "bcryptjs"
+import { validationResult } from "express-validator"
 import jwt from "jsonwebtoken"
 import PresidentModel from "../database/President.js"
-import { validatePresidentData } from "./helpers/presidents.js"
+import { transformValidatorErrors } from "./helpers.js"
 
 const registerPresident = async (req, res) => {
-   const validationErrors = validatePresidentData(req.body)
-   if(validationErrors){
-      return res.status(400).json(validationErrors)
+   const validationResults = validationResult(req)
+   if(!validationResults.isEmpty()){
+      const transformedErrorsObject = transformValidatorErrors(validationResults)
+      return res.status(400).json(transformedErrorsObject)
    }
-   const { name, password, email, country, hasButton } = req.body
 
-   const isEmailTaken = await PresidentModel.exists({ email: email })
-   if(isEmailTaken){
-      return res.status(400).json({
-         fields: {
-            email: `email is already taken`
-         }
-      })
-   }
+   const { name, password, email, country, hasButton } = req.body
 
    const salt = await bcryptjs.genSalt(12)
    const hashedPassword = await bcryptjs.hash(password, salt)
@@ -40,14 +34,13 @@ const registerPresident = async (req, res) => {
 }
 
 const loginPresident = async (req, res) => {
-   const { email, password } = req.body
+   const validationResults = validationResult(req)
+   if(!validationResults.isEmpty()){
+      const transformedErrorsObject = transformValidatorErrors(validationResults)
+      return res.status(400).json(transformedErrorsObject)
+   }
 
-   if(!email || !password){
-      return res.status(400).json({ message: `fields "email" and "password" are required` })
-   }
-   if(typeof email !== "string" || typeof password !== "string"){
-      return res.status(400).json({ message: `fields "email" and "password" need to be strings` })
-   }
+   const { email, password } = req.body
 
    const president = await PresidentModel.findOne({ email })
 

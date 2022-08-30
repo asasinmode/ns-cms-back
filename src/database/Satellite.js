@@ -1,5 +1,10 @@
 import mongoose from "mongoose";
-import { launchDateMin, softwareVersionRegex } from "../controllers/helpers/satellites.js";
+
+// https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
+// modified to only accept major, minor and patch numeric identifiers
+// so 1.0.0, 0.0.0, 1.2.3 and so on without letters at the end
+export const softwareVersionRegex = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/
+export const launchDateMin = new Date('01 Jan 1970 00:00:00 GMT')
 
 const SatelliteSchema = mongoose.Schema({
    sideNumber: {

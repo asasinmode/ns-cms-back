@@ -1,14 +1,16 @@
+import { validationResult } from "express-validator";
 import SatelliteModel from "../database/Satellite.js";
-import { validateSatelliteData } from "./helpers/satellites.js"
+import { createSatellitePatchObject, transformValidatorErrors } from "./helpers.js";
 
 const getSatellites = async (_req, res) => {
    res.json(await SatelliteModel.find().select({ __v: 0 }))
 }
 
 const createSatellite = async (req, res) => {
-   const validationErrors = validateSatelliteData(req.body)
-   if(validationErrors){
-      return res.status(400).json(validationErrors)
+   const validationResults = validationResult(req)
+   if(!validationResults.isEmpty()){
+      const transformedErrorsObject = transformValidatorErrors(validationResults)
+      return res.status(400).json(transformedErrorsObject)
    }
 
    const { sideNumber, manufacturer, model, softwareVersion, vintage, launchDate, ammunitionLeft, altitude, hasAI  } = req.body
@@ -44,26 +46,13 @@ const updateSatellite = async (req, res) => {
       return res.sendStatus(404)
    }
 
-   const validationErrors = validateSatelliteData(req.body, true)
-   if(validationErrors){
-      return res.status(400).json(validationErrors)
+   const validationResults = validationResult(req)
+   if(!validationResults.isEmpty()){
+      const transformedErrorsObject = transformValidatorErrors(validationResults)
+      return res.status(400).json(transformedErrorsObject)
    }
 
-   // go through all valid satellite keys and, if specified in req.body add them to updateObject
-   const validSatelliteKeys = ["sideNumber", "manufacturer", "model", "softwareVersion", "vintage", "launchDate", "ammunitionLeft", "altitude", "hasAI"]
-   const updateObject = validSatelliteKeys.reduce((previous, current) => {
-      if(req.body[current] !== undefined){
-         return {
-            ...previous,
-            [current]: req.body[current]
-         }
-      }
-      return previous
-   }, {})
-
-   if(updateObject.launchDate !== undefined){
-      updateObject.launchDate = new Date(updateObject.launchDate)
-   }
+   const updateObject = createSatellitePatchObject(req.body)
 
    const updateResults = await SatelliteModel.findOneAndUpdate({ _id: uid }, updateObject, { new: true })
 

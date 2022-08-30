@@ -7,7 +7,19 @@ dotenv.config()
 import app from "../src/app.js"
 import PresidentModel from "../src/database/President.js"
 import SatelliteModel from "../src/database/Satellite.js"
-import { validPresidentObject, validSatelliteDataObject } from "./helpers.spec.js"
+
+const validPresidentObject = {
+   name: "Ronald Reagan",
+   country: "USA",
+   email: "valid@email.com",
+   password: "secure123!"
+}
+const validSatelliteDataObject = {
+   sideNumber: "USA001",
+   manufacturer: "example",
+   ammunitionLeft: 5,
+   altitude: 100
+}
 
 describe("controllers", () => {
    const randomPrefix = Date.now().toString() + Math.floor(Math.random() * 100)
@@ -66,7 +78,7 @@ describe("controllers", () => {
             })
             .expect(400)
             .then(res => {
-               assert.ok(res.body.fields.email !== undefined)
+               assert.ok(res.body.errors.email !== undefined)
             })
       })
    })
