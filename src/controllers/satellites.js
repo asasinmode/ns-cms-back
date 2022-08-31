@@ -3,7 +3,7 @@ import SatelliteModel from "../database/Satellite.js";
 import { createSatellitePatchObject, transformValidatorErrors } from "./helpers.js";
 
 const getSatellites = async (_req, res) => {
-   res.json(await SatelliteModel.find().select({ __v: 0 }))
+   return res.json(await SatelliteModel.find().select({ __v: 0 }))
 }
 
 const createSatellite = async (req, res) => {
@@ -27,7 +27,7 @@ const createSatellite = async (req, res) => {
       hasAI
    })
 
-   res.status(201).json(newSatellite)
+   return res.status(201).json(newSatellite)
 }
 
 const deleteSatellite = async (req, res) => {
@@ -35,7 +35,7 @@ const deleteSatellite = async (req, res) => {
 
    await SatelliteModel.findByIdAndDelete(uid)
 
-   res.sendStatus(204)
+   return res.sendStatus(204)
 }
 
 const updateSatellite = async (req, res) => {
@@ -56,7 +56,7 @@ const updateSatellite = async (req, res) => {
 
    const updateResults = await SatelliteModel.findOneAndUpdate({ _id: uid }, updateObject, { new: true })
 
-   res.json(updateResults)
+   return res.json(updateResults)
 }
 
 export { getSatellites, createSatellite, deleteSatellite, updateSatellite }
